@@ -1,0 +1,104 @@
+<?php 
+$config = \vendor\Config::get('site');
+?>
+<!DOCTYPE html>
+<html>
+<head>
+	<title><?=$config['title'];?></title>
+	<link rel="stylesheet" type="text/css" href="/assets/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="/assets/sweetalert/sweetalert.css">
+	<script type="text/javascript" src="/assets/js/jquery-2.1.3.min.js"></script>
+	<script type="text/javascript" src="/assets/sweetalert/sweetalert.min.js"></script>
+	<!-- // <script type="text/javascript" src="/assets/sweetalert/sweetalert-dev.js"></script> -->
+	<!-- // <script type="text/javascript" src="/assets/js/sweet-alert.js"></script> -->
+	<!-- // <script type="text/javascript" src="/assets/js/sweet-alert.min.js"></script> -->
+
+  
+  <script>
+  function deletePhoto(id) {
+  	// id = $(this).attr("data-photo-id");
+  	// alert(id);
+    swal({
+      title: "Are you sure?", 
+      text: "Are you sure that you want to delete this photo?", 
+      type: "warning",
+      showCancelButton: true,
+      closeOnConfirm: false,
+      confirmButtonText: "Yes, delete it!",
+      confirmButtonColor: "#ec6c62"
+    }, function() {
+      $.ajax({
+
+        url: "/topic/delete/"+id,
+        type: "POST"
+        // data: "id="+id
+
+      })
+      .done(function(data) {
+      	swal({
+      		title: "Deleted !",
+      		text: "Your data successfully deleted!",
+      		type: "success"
+      		// confirmButtonColor: "#ec6c62"
+      	}, function() {
+      		window.location.reload(true);
+      	});
+
+        // swal("Deleted!", "Your file was successfully deleted!", "success")
+        // window.location.reload(true);
+      })
+      .error(function(data) {
+        swal("Oops", "We couldn't connect to the server!", "error");
+      });
+    });
+  }
+  </script>
+
+</head>
+<body>
+	<nav class="navbar navbar-default" role="navigation">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<a href="/" class="navbar-brand">SIMPLE CRUD</a>
+			</div>
+		</div>
+
+		<div class="navbar-form navbar-right" role="search">
+			<a href="./add" class="btn btn-default">
+				<span class="glyphicon glyphicon-plus-sign"></span>
+				Add Topic
+			</a>
+		</div>		
+	</nav>
+
+<!-- container -->
+<div class="container">	
+	<!-- show all the data render to here -->
+	<?php $this->content(); ?>
+</div> <!-- eof container -->
+
+<!-- script -->
+<script type="text/javascript">
+	// $('[data-toggle="popover"]').popover();
+</script>
+<script type="text/javascript">
+// $(document).ready
+// swal({
+//   title: "Are you sure?",
+//   text: "Your will not be able to recover this imaginary file!",
+//   type: "warning",
+//   showCancelButton: true,
+//   confirmButtonClass: "btn-danger",
+//   confirmButtonText: "Yes, delete it!",
+//   closeOnConfirm: false
+// },
+// function(){
+//   swal("Deleted!", "Your imaginary file has been deleted.", "success");
+// });		
+// 
+ // function delete(id){
+ // 	console.log(id);
+ // }
+</script>
+</body>
+</html>
